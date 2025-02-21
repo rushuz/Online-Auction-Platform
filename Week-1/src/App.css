@@ -1,0 +1,172 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap');
+
+* {
+  box-sizing: border-box;
+  font-family: 'Montserrat', sans-serif;
+}
+
+body {
+  background-color: #F4F7F9;
+  margin: 0;
+  padding: 0;
+  color: #333;
+}
+
+.app {
+  max-width: 1100px;
+  margin: 30px auto;
+  padding: 25px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 5px 25px rgba(0, 0, 0, 0.15);
+}
+
+/* HEADER */
+header {
+  background: linear-gradient(90deg, #1E2A38 0%, #FFD700 100%);
+  color: #fff;
+  padding: 25px 0;
+  text-align: center;
+  border-radius: 12px 12px 0 0;
+}
+
+h1 {
+  margin: 0;
+  font-size: 2.8rem;
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+
+/* NAVIGATION */
+nav {
+  display: flex;
+  justify-content: center;
+  background: #1E2A38;
+  padding: 15px;
+  border-radius: 0 0 12px 12px;
+}
+
+.nav-link {
+  margin: 0 15px;
+  text-decoration: none;
+  color: #FFD700;
+  font-weight: bold;
+  font-size: 1rem;
+  transition: color 0.3s;
+}
+
+.nav-link:hover {
+  color: #F4F7F9;
+}
+
+/* FORM CONTAINER */
+.form-container {
+  background: #F4F7F9;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.1);
+  margin-bottom: 25px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+input,
+textarea {
+  margin: 10px 0;
+  padding: 14px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  transition: border-color 0.3s;
+}
+
+input:focus,
+textarea:focus {
+  border-color: #FFD700;
+  outline: none;
+}
+
+/* BUTTONS */
+button {
+  padding: 14px;
+  background: #FFD700;
+  color: #1E2A38;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: bold;
+  transition: background 0.3s, transform 0.2s;
+}
+
+button:hover {
+  background: #E6C200;
+  transform: scale(1.05);
+}
+
+/* AUCTION ITEM LIST */
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+li {
+  background: #fff;
+  margin: 12px 0;
+  padding: 18px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+li:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+li a {
+  text-decoration: none;
+  color: #1E2A38;
+  font-weight: bold;
+}
+
+/* FOOTER */
+footer {
+  margin-top: 25px;
+  text-align: center;
+  color: #555;
+  font-size: 0.9rem;
+}
+
+/* ALERT MESSAGES */
+.message {
+  color: #D9534F;
+  font-weight: bold;
+  margin-top: 12px;
+}
+
+/* RESPONSIVE DESIGN */
+@media (max-width: 600px) {
+  .app {
+    margin: 15px;
+    padding: 18px;
+  }
+
+  header {
+    padding: 12px 0;
+  }
+
+  h1 {
+    font-size: 2.2rem;
+  }
+
+  h2 {
+    font-size: 1.6rem;
+  }
+
+  .nav-link {
+    font-size: 0.9rem;
+  }
+}
