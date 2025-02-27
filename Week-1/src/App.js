@@ -36,6 +36,7 @@ function App() {
             <Link to="/signin" className="nav-link">Signin</Link>
             <Link to="/dashboard" className="nav-link">Dashboard</Link>
             <Link to="/post-auction" className="nav-link">Post Auction</Link>
+            <Link to="/auction/:id" className="nav-link">Auction Details</Link>
             {isAuthenticated && (
               <button style={{ marginLeft: '10px', background: 'red', color: 'white' }} onClick={handleLogout} className="nav-link logout-button">Logout</button>
             )}
