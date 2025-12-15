@@ -12,7 +12,7 @@ function DeleteAuction() {
 
   const handleDelete = async () => {
     try {
-      await axios.delete(`http://localhost:5001/auctions/${id}`);
+      await axios.delete(`${process.env.REACT_APP_API_URL}/auctions/${id}`);
       setToastMsg('Auction deleted successfully!');
       setTimeout(() => setToastMsg(""), 3000);
       navigate('/dashboard');

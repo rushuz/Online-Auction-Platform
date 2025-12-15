@@ -2,13 +2,20 @@ const mongoose = require('mongoose');
 
 const connectDB = async () => {
   try {
-    await mongoose.connect('mongodb://127.0.0.1:27017/auctionDB', {
+    const mongoURI = process.env.MONGO_URI;
+
+    if (!mongoURI) {
+      throw new Error('MONGO_URI is not defined in environment variables');
+    }
+
+    await mongoose.connect(mongoURI, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     });
-    console.log('MongoDB Connected');
+
+    console.log('MongoDB Connected Successfully');
   } catch (error) {
-    console.error('MongoDB Connection Error:', error);
+    console.error('MongoDB Connection Error:', error.message);
     process.exit(1);
   }
 };

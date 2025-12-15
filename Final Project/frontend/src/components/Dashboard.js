@@ -17,7 +17,7 @@ function Dashboard() {
 
     const fetchItems = async () => {
       try {
-        const res = await axios.get('http://localhost:5001/auctions');
+        const res = await axios.get(`${process.env.REACT_APP_API_URL}/auctions`);
         setItems(res.data);
       } catch (err) {
         console.error(err);

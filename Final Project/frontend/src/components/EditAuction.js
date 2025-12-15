@@ -18,7 +18,7 @@ function EditAuction() {
   useEffect(() => {
     const fetchItem = async () => {
       try {
-        const res = await axios.get(`http://localhost:5001/auctions/${id}`);
+        const res = await axios.get(`${process.env.REACT_APP_API_URL}/auctions/${id}`);
         setItem(res.data);
       } catch (error) {
         console.error('Error fetching auction item:', error);
@@ -34,7 +34,7 @@ function EditAuction() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.put(`http://localhost:5001/auctions/${id}`, item);
+      await axios.put(`${process.env.REACT_APP_API_URL}/auctions/${id}`, item);
       setToastMsg('Auction updated successfully!');
       setTimeout(() => setToastMsg(""), 3000);
       navigate(`/auction/${id}`);

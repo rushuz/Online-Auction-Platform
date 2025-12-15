@@ -32,7 +32,7 @@ function PostAuction() {
   
     try {
       await axios.post(
-        'http://localhost:5001/auctions',
+        `${process.env.REACT_APP_API_URL}/auctions`,
         { itemName, description, startingBid, closingTime },
         {
           headers: {

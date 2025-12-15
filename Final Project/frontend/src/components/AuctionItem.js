@@ -17,7 +17,7 @@ function AuctionItem() {
         const user = JSON.parse(localStorage.getItem('user'));
         setLoggedInUser(user?.username);
 
-        const res = await axios.get(`http://localhost:5001/auctions/${id}`, {
+        const res = await axios.get(`${process.env.REACT_APP_API_URL}/auctions/${id}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         setItem(res.data);
@@ -41,7 +41,7 @@ function AuctionItem() {
       const token = localStorage.getItem('authToken');
 
       const res = await axios.post(
-        `http://localhost:5001/bid/${id}`,
+        `${process.env.REACT_APP_API_URL}/bid/${id}`,
         { bid: Number(bid) },
         {
           headers: {
@@ -69,7 +69,7 @@ function AuctionItem() {
 
     try {
       const token = localStorage.getItem('authToken');
-      await axios.delete(`http://localhost:5001/auction/${id}`, {
+      await axios.delete(`${process.env.REACT_APP_API_URL}/auction/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       navigate('/dashboard');

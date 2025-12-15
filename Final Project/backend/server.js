@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 const express = require('express');
 const cors = require('cors');
 const bcrypt = require('bcryptjs');
@@ -9,9 +11,10 @@ const app = express();
 //server is being configured to handle json
 app.use(express.json());
 //cors will help server to accept requests from multiple domains
-app.use(cors());
+app.use(cors({
+  origin: '*'
+}));
 
-const SECRET_KEY = 'my_super_secret_123!';
 connectDB(); //go to db.js
 
 // Middleware to verify token
