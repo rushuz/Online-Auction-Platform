@@ -20,7 +20,7 @@ const auctionItemSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
     required: true
-  }
+  },
   closedAt: {
     type: Date,
     default: null
