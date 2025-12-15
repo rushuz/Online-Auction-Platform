@@ -30,3 +30,8 @@ coverage/
 # Optional lock files (keep ONE if team project)
 # package-lock.json
 # yarn.lock
+
+**/node_modules/
+**/.env
+**/dist
+**/build
