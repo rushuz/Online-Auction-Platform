@@ -27,8 +27,21 @@ function Dashboard() {
       }
     };
 
+    
+    
     fetchItems();
   }, [navigate]);
+  
+  const getTimeLeft = (closingTime) => {
+  const diff = new Date(closingTime) - new Date();
+  if (diff <= 0) return "Ended";
+
+  const h = Math.floor(diff / (1000 * 60 * 60));
+  const m = Math.floor((diff / (1000 * 60)) % 60);
+  const s = Math.floor((diff / 1000) % 60);
+
+  return `${h}h ${m}m ${s}s`;
+  };
 
   return (
     <div>
@@ -43,22 +56,36 @@ function Dashboard() {
       {error && <p style={{ color: 'red' }}>{error}</p>}
 
       {!loading && !error && (
-        <ul>
-          {items.length === 0 ? (
-            <p>No auctions available</p>
-          ) : (
-            items.map((item) => (
-              <li key={item._id}>
-                <Link to={`/auction/${item._id}`}>
-                  {item.itemName} — Current Bid: ₹{item.currentBid}{' '}
-                  {item.isClosed && <strong>(Closed)</strong>}
-                </Link>
-              </li>
-            ))
-          )}
-        </ul>
-      )}
-    </div>
+      <div className="auction-grid">
+        {items.map((item) => (
+          <div className="auction-card" key={item._id}>
+            
+            <span
+              className={`auction-status ${
+                item.isClosed ? 'closed' : 'live'
+              }`}
+            >
+              {item.isClosed ? 'Closed' : 'Live'}
+            </span>
+
+            <h3 className="auction-title">{item.itemName}</h3>
+
+            <p className="auction-info auction-bid">
+              Current Bid: ₹{item.currentBid}
+            </p>
+            <p className="auction-meta">
+              ⏳ {item.isClosed ? "Auction ended" : getTimeLeft(item.closingTime)}
+            </p>
+
+
+            <Link to={`/auction/${item._id}`}>
+              View Auction →
+            </Link>
+          </div>
+        ))}
+      </div>
+    )}
+  </div>
   );
 }
 

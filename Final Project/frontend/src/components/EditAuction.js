@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
+import Toast from './Toast';
 
 function EditAuction() {
   const { id } = useParams();
   const navigate = useNavigate();
+  const [toastMsg, setToastMsg] = useState("");
+
   const [item, setItem] = useState({
     itemName: '',
     description: '',
@@ -32,7 +35,8 @@ function EditAuction() {
     e.preventDefault();
     try {
       await axios.put(`http://localhost:5001/auctions/${id}`, item);
-      alert('Auction updated successfully!');
+      setToastMsg('Auction updated successfully!');
+      setTimeout(() => setToastMsg(""), 3000);
       navigate(`/auction/${id}`);
     } catch (error) {
       console.error('Error updating auction:', error);
@@ -40,6 +44,8 @@ function EditAuction() {
   };
 
   return (
+    <>
+    <Toast message={toastMsg} />
     <div>
       <h2>Edit Auction</h2>
       <form onSubmit={handleSubmit}>
@@ -50,6 +56,7 @@ function EditAuction() {
         <button type="submit">Update Auction</button>
       </form>
     </div>
+    </>
   );
 }
 

@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import Toast from "./Toast";
+
 
 function PostAuction() {
   const [itemName, setItemName] = useState('');
   const [description, setDescription] = useState('');
   const [startingBid, setStartingBid] = useState(0);
   const [closingTime, setClosingTime] = useState('');
+  const [toastMsg, setToastMsg] = useState("");
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -21,7 +24,8 @@ function PostAuction() {
     
     const token = localStorage.getItem('authToken');
     if (!token) {
-      alert('You must be signed in to post an auction.');
+      setToastMsg('You must be signed in to post an auction.');
+      setTimeout(() => setToastMsg(""),3000);
       navigate('/signin');
       return;
     }
@@ -38,7 +42,9 @@ function PostAuction() {
         }
       );
   
-      alert('Auction item posted!');
+      setToastMsg("Auction posted successfully!");
+      setTimeout(() => setToastMsg(""), 3000);
+
       navigate('/dashboard');
     } catch (err) {
       console.error('Auction Post Error:', err.response?.data || err.message);
@@ -47,6 +53,8 @@ function PostAuction() {
   };
   
   return (
+    <>
+    <Toast message={toastMsg}/>
     <div className="form-container">
       <h2>Post New Auction</h2>
       <form onSubmit={handlePostAuction}>
@@ -79,6 +87,7 @@ function PostAuction() {
         <button type="submit">Post Auction</button>
       </form>
     </div>
+    </>
   );
 }
 
