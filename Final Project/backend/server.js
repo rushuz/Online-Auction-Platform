@@ -1,5 +1,9 @@
 require('dotenv').config();
 
+app.get('/', (req, res) => {
+  res.send('Online Auction Platform Backend is Running 🚀');
+});
+
 const express = require('express');
 const cors = require('cors');
 const bcrypt = require('bcryptjs');
