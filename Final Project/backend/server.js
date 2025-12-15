@@ -191,12 +191,14 @@ app.delete('/auction/:id', authenticate, async (req, res) => {
 app.post('/bid/:id', authenticate, async (req, res) => {
   try {
     const { id } = req.params;
-    const { bid, bidderName } = req.user.username; 
-    const item = await AuctionItem.findById(id);
+    const { bid } = req.body;              // ✅ from frontend
+    const bidderName = req.user.username;  // ✅ from JWT
 
+    const item = await AuctionItem.findById(id);
     if (!item) return res.status(404).json({ message: 'Auction item not found' });
     if (item.isClosed) return res.status(400).json({ message: 'Auction is closed' });
 
+    // Auto close if time passed
     if (new Date() > new Date(item.closingTime)) {
       item.isClosed = true;
       item.closedAt = new Date();
@@ -204,13 +206,14 @@ app.post('/bid/:id', authenticate, async (req, res) => {
       return res.json({ message: 'Auction closed', winner: item.highestBidder });
     }
 
-    if (bid > item.currentBid) {
-      item.currentBid = bid;
-      item.highestBidder = req.user.username;
+    // ✅ Ensure numbers
+    if (Number(bid) > Number(item.currentBid)) {
+      item.currentBid = Number(bid);
+      item.highestBidder = bidderName;
       await item.save();
-      res.json({ message: 'Bid successful', item });
+      return res.json({ message: 'Bid successful', item });
     } else {
-      res.status(400).json({ message: 'Bid too low' });
+      return res.status(400).json({ message: 'Bid too low' });
     }
   } catch (error) {
     console.error('Bidding Error:', error);

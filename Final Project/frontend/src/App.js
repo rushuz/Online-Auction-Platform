@@ -28,7 +28,7 @@ function App() {
     <Router>
       <div className="app">
         <header>
-          <h1>Auction App</h1>
+          <h1 id='top'>Auction App</h1>
           <nav>
             <Link to="/signup">Signup</Link>
             <Link to="/signin">Signin</Link>

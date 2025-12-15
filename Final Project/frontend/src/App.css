@@ -10,24 +10,29 @@
 body {
   background: url('auction.jpeg') no-repeat center center fixed, rgba(213, 216, 220, 0.7); /* Soft Silver with background image */
   background-size: cover;
-  color: #2E4053; /* Dark Blue-Gray */
+  color: #2E4053; 
   padding: 0;
   margin: 0;
-  height: 100vh;
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden;
   display: flex;
   flex-direction: column;
 }
 
 /* HEADER */
 header {
-  background: #2E4053; /* Dark Blue-Gray */
-  color: #F1C40F; /* Bright Yellow */
+  background: #2E4053; 
+  color: #9c8013; 
   padding: 20px 0;
   text-align: center;
   font-size: 2rem;
   font-weight: bold;
 }
 
+#top {
+  margin-bottom: 30px;
+}
 /* NAVIGATION */
 nav {
   display: flex;
@@ -50,7 +55,7 @@ nav {
 }
 
 .nav-link:hover {
-  color: #F1C40F; /* Bright Yellow */
+  color: #9c8013; /* Bright Yellow */
   transform: scale(1.1);
 }
 
@@ -74,6 +79,9 @@ button.logout:hover {
 
 /* MAIN CONTENT */
 main {
+  width: 100%;
+  max-width: 1400px;  
+  margin: 0 auto;
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -83,7 +91,7 @@ main {
   text-align: center;
 }
 
-/* FORM CONTAINERS */
+/* CONTAINERS */
 .form-container {
   background: rgba(255, 255, 255, 0.3);
   padding: 30px;
@@ -92,6 +100,14 @@ main {
   width: 100%;
   max-width: 500px;
 }
+
+.dashboard-container {
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 1.5rem;
+}
+
 
 input,
 textarea {
@@ -114,15 +130,21 @@ textarea:focus {
 
 /* AUCTION GRID */
 .auction-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 30px;
+  display: flex;
+  flex-wrap: wrap;          /* ✅ allows wrapping */
+  gap: 1.5rem;
   width: 100%;
   max-width: 1200px;
-  margin-top: 40px auto;
+  margin: 40px auto;
+  padding: 0 1rem;
+  justify-content: center;  /* centers cards */
 }
 
 .auction-card {
+  flex: 1 1 280px;          /* 🔥 KEY LINE */
+  max-width: 320px;         /* controls card width on desktop */
+  min-width: 260px;         /* prevents card shrink */
+  
   position: relative;
   background: rgba(255, 255, 255, 0.45);
   border-radius: 18px;
@@ -130,6 +152,7 @@ textarea:focus {
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.18);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   text-align: left;
+  backdrop-filter: blur(12px);
 }
 
 .auction-card:hover {
@@ -268,41 +291,6 @@ button.delete:hover {
 .dashboard-actions {
   margin-top: 10px;
   margin-bottom: 25px;   /* controls the gap */
-}
-
-/* LIST ITEMS */
-ul {
-  list-style: none;
-  padding: 0;
-  width: 100%;
-  max-width: 600px;
-}
-
-li {
-  background: rgba(255, 255, 255, 0.3);
-  margin: 10px 0;
-  padding: 15px;
-  border-radius: 8px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  transition: transform 0.3s, box-shadow 0.3s;
-}
-
-li:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
-}
-
-li a {
-  text-decoration: none;
-  color: #2E4053; /* Dark Blue-Gray */
-  font-weight: bold;
-  transition: color 0.3s;
-}
-
-li a:hover {
-  color: #F1C40F; /* Bright Yellow */
 }
 
 /* FOOTER */
