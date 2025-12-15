@@ -1,9 +1,5 @@
 require('dotenv').config();
 
-app.get('/', (req, res) => {
-  res.send('Online Auction Platform Backend is Running 🚀');
-});
-
 const express = require('express');
 const cors = require('cors');
 const bcrypt = require('bcryptjs');
@@ -34,6 +30,10 @@ const authenticate = (req, res, next) => {
     next();
   });
 };
+
+app.get('/', (req, res) => {
+  res.send('Online Auction Platform Backend is Running 🚀');
+});
 
 // Signup Route
 app.post('/Signup', async (req, res) => {
