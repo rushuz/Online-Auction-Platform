@@ -4,6 +4,8 @@ import { Link, useNavigate } from 'react-router-dom';
 
 function Dashboard() {
   const [items, setItems] = useState([]);
+  const [loading, setLoading] = useState(true);   
+  const [error, setError] = useState('');
   const nav = useNavigate();
 
   useEffect(() => {
@@ -17,41 +19,45 @@ function Dashboard() {
       try {
         const res = await axios.get('http://localhost:5001/auctions');
         setItems(res.data);
-      } catch (error) {
-        console.error('Error fetching auctions:', error);
+      } catch (err) {
+        console.error(err);
+        setError('Failed to load auctions. Please try again.');
+      } finally {
+        setLoading(false);
       }
     };
-    fetchItems();
-  }, []);
 
-  // 🔹 Handle Logout
-  // const handleLogout = () => {
-  //   localStorage.removeItem('authToken'); // Remove token
-  //   navigate('/signin'); // Redirect to Sign In page
-  // };
+    fetchItems();
+  }, [navigate]);
 
   return (
     <div>
       <h2>Auction Dashboard</h2>
 
-      {/* 🔹 Logout Button 
-      <button onClick={handleLogout} style={{ marginLeft: '10px', background: 'red', color: 'white' }}>
-        Logout
-      </button>*/}
-
       <Link to="/post-auction">
-        <button>Post New Auction</button>
+        <button className="primary">Post New Auction</button>
       </Link>
 
-      <ul>
-        {items.map((item) => (
-          <li key={item._id}>
-            <Link to={`/auction/${item._id}`}>
-              {item.itemName} - Current Bid: ${item.currentBid} {item.isClosed ? '(Closed)' : ''}
-            </Link>
-          </li>
-        ))}
-      </ul>
+      {loading && <p>Loading auctions...</p>}
+
+      {error && <p style={{ color: 'red' }}>{error}</p>}
+
+      {!loading && !error && (
+        <ul>
+          {items.length === 0 ? (
+            <p>No auctions available</p>
+          ) : (
+            items.map((item) => (
+              <li key={item._id}>
+                <Link to={`/auction/${item._id}`}>
+                  {item.itemName} — Current Bid: ₹{item.currentBid}{' '}
+                  {item.isClosed && <strong>(Closed)</strong>}
+                </Link>
+              </li>
+            ))
+          )}
+        </ul>
+      )}
     </div>
   );
 }

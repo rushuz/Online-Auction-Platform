@@ -18,6 +18,7 @@ function Signin() {
 
       if (res.data.token) {
         localStorage.setItem('authToken', res.data.token);
+        localStorage.setItem("user", JSON.stringify(res.data.user));
         navigate('/dashboard'); // Redirect to dashboard
       } else {
         setError('Invalid credentials');

@@ -16,6 +16,11 @@ const auctionItemSchema = new mongoose.Schema({
   highestBidder: { type: String, default: '' },
   closingTime: { type: Date, required: true },
   isClosed: { type: Boolean, default: false },
+  owner: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+    required: true
+  }
 });
 
 const AuctionItem = mongoose.model('AuctionItem', auctionItemSchema);

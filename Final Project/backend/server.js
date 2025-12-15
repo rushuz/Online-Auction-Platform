@@ -4,8 +4,6 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const { User, AuctionItem } = require('./model');
 const { connectDB } = require('./db');
-const models = require('./model');
-const db = require('./db');
 
 const app = express();
 //server is being configured to handle json
@@ -29,7 +27,6 @@ const authenticate = (req, res, next) => {
     next();
   });
 };
-
 
 // Signup Route
 app.post('/Signup', async (req, res) => {
@@ -66,16 +63,16 @@ app.post('/Signin', async (req, res) => {
       return res.status(400).json({ message: 'Invalid credentials' });
     }
 
-    // 🔹 Compare hashed password
+    //  Compare hashed password
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
       return res.status(400).json({ message: 'Invalid credentials' });
     }
 
-    // 🔹 Generate JWT token
+    //  Generate JWT token
     const token = jwt.sign({ userId: user._id, username }, SECRET_KEY, { expiresIn: '1h' });
 
-    res.json({ message: 'Signin successful', token });
+    res.json({ message: 'Signin successful', token, user: { id: user._id, username: user.username} });
   } catch (error) {
     console.error('Signin Error:', error);
     res.status(500).json({ message: 'Internal Server Error' });
@@ -84,7 +81,8 @@ app.post('/Signin', async (req, res) => {
 
 
 // Create Auction Item (Protected)
-app.post('/AuctionItem', authenticate, async (req, res) => {
+app.post('/AuctionItem', authenticate, createAuction);
+app.post('/auctions', authenticate, async (req, res) => {
   try {
     const { itemName, description, startingBid, closingTime } = req.body;
     
@@ -100,6 +98,7 @@ app.post('/AuctionItem', authenticate, async (req, res) => {
       currentBid: startingBid,
       highestBidder: '',
       closingTime,
+      owner: req.user.userId
     });
 
     await newItem.save();
@@ -126,6 +125,12 @@ app.get('/auctions/:id', async (req, res) => {
   try {
     const auctionItem = await AuctionItem.findById(req.params.id);
     if (!auctionItem) return res.status(404).json({ message: 'Auction not found' });
+
+    // Auto-close check
+    if (!auctionItem.isClosed && new Date() > new Date(auctionItem.closingTime)) {
+      auctionItem.isClosed = true;
+      await auctionItem.save();
+    }
 
     res.json(auctionItem);
   } catch (error) {
@@ -186,7 +191,7 @@ app.delete('/auction/:id', authenticate, async (req, res) => {
 app.post('/bid/:id', authenticate, async (req, res) => {
   try {
     const { id } = req.params;
-    const { bid, bidderName } = req.body; // Get bidderName from frontend
+    const { bid, bidderName } = req.user.username; 
     const item = await AuctionItem.findById(id);
 
     if (!item) return res.status(404).json({ message: 'Auction item not found' });
@@ -200,7 +205,7 @@ app.post('/bid/:id', authenticate, async (req, res) => {
 
     if (bid > item.currentBid) {
       item.currentBid = bid;
-      item.highestBidder = bidderName; // Store bidder's name from frontend
+      item.highestBidder = req.user.username;
       await item.save();
       res.json({ message: 'Bid successful', item });
     } else {

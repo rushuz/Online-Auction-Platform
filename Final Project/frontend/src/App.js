@@ -9,6 +9,7 @@ import Landing from './components/Landing';
 import EditAuction from './components/EditAuction';
 import DeleteAuctionItem from './components/DeleteAuctionItem';
 import './App.css';
+import ProtectedRoute from './components/ProtectedRoute';
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -43,7 +44,7 @@ function App() {
             <Route path="/" element={<Landing />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/signin" element={<Signin />} />
-            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
             <Route path="/auction/:id" element={<AuctionItem />} />
             <Route path="/post-auction" element={<PostAuction />} />
             <Route path="/edit-auction/:id" element={<EditAuction />} />
