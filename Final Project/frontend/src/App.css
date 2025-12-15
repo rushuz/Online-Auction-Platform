@@ -265,6 +265,11 @@ button.delete:hover {
   transform: scale(1.05);
 }
 
+.dashboard-actions {
+  margin-top: 10px;
+  margin-bottom: 25px;   /* controls the gap */
+}
+
 /* LIST ITEMS */
 ul {
   list-style: none;

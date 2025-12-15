@@ -21,7 +21,16 @@ const auctionItemSchema = new mongoose.Schema({
     ref: 'User',
     required: true
   }
+  closedAt: {
+    type: Date,
+    default: null
+  }
 });
+
+auctionItemSchema.index(
+  { closedAt: 1 },
+  { expireAfterSeconds: 60 * 60 * 24 * 30 } // 30 days
+);
 
 const AuctionItem = mongoose.model('AuctionItem', auctionItemSchema);
 

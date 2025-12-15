@@ -81,7 +81,6 @@ app.post('/Signin', async (req, res) => {
 
 
 // Create Auction Item (Protected)
-app.post('/AuctionItem', authenticate, createAuction);
 app.post('/auctions', authenticate, async (req, res) => {
   try {
     const { itemName, description, startingBid, closingTime } = req.body;
@@ -129,6 +128,7 @@ app.get('/auctions/:id', async (req, res) => {
     // Auto-close check
     if (!auctionItem.isClosed && new Date() > new Date(auctionItem.closingTime)) {
       auctionItem.isClosed = true;
+      auctionItem.closedAt = new Date();
       await auctionItem.save();
     }
 
@@ -199,6 +199,7 @@ app.post('/bid/:id', authenticate, async (req, res) => {
 
     if (new Date() > new Date(item.closingTime)) {
       item.isClosed = true;
+      item.closedAt = new Date();
       await item.save();
       return res.json({ message: 'Auction closed', winner: item.highestBidder });
     }

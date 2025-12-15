@@ -32,7 +32,7 @@ function PostAuction() {
   
     try {
       await axios.post(
-        'http://localhost:5001/auctions"',
+        'http://localhost:5001/auctions',
         { itemName, description, startingBid, closingTime },
         {
           headers: {

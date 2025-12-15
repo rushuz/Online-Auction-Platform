@@ -6,12 +6,12 @@ function Dashboard() {
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);   
   const [error, setError] = useState('');
-  const nav = useNavigate();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const token = localStorage.getItem('authToken');
     if (!token) {
-      nav('/signin'); // Redirect to signin if not authenticated
+      navigate('/signin'); // Redirect to signin if not authenticated
       return;
     }
 
@@ -47,10 +47,11 @@ function Dashboard() {
     <div>
       <h2>Auction Dashboard</h2>
 
+      <div className="dashboard-actions">
       <Link to="/post-auction">
         <button className="primary">Post New Auction</button>
       </Link>
-
+      </div>
       {loading && <p>Loading auctions...</p>}
 
       {error && <p style={{ color: 'red' }}>{error}</p>}
