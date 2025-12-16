@@ -18,13 +18,13 @@ function Signup() {
     }
 
     try {
-      const res = await axios.post(`${process.env.REACT_APP_API_URL}/Signup`, {
+      const res = await axios.post(`${process.env.REACT_APP_API_URL}/signup`, {
         username,
         password
       });
 
       alert('Signup successful! Please sign in.');
-      navigate('/Signin'); // Redirect to signin page
+      navigate('/signin'); // Redirect to signin page
     } catch (err) {
       console.error('Signup Error:', err.response?.data || err.message);
       setError(err.response?.data?.message || 'Signup failed. Please try again.');

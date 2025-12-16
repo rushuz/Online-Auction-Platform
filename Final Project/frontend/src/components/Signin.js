@@ -13,7 +13,7 @@ function Signin() {
     setError('');
 
     try {
-      const res = await axios.post(`${process.env.REACT_APP_API_URL}/Signin`, { username, password });
+      const res = await axios.post(`${process.env.REACT_APP_API_URL}/signin`, { username, password });
       console.log('Signin Response:', res.data);
 
       if (res.data.token) {

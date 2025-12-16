@@ -12,9 +12,15 @@ const app = express();
 //server is being configured to handle json
 app.use(express.json());
 //cors will help server to accept requests from multiple domains
-app.use(cors({
-  origin: '*'
-}));
+const corsOptions = {
+  origin: '*',
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+};
+
+app.use(cors(corsOptions));
+app.options('*', cors(corsOptions)); // ✅ THIS LINE FIXES PREFLIGHT
+
 
 connectDB(); //go to db.js
 
@@ -37,7 +43,7 @@ app.get('/', (req, res) => {
 });
 
 // Signup Route
-app.post('/Signup', async (req, res) => {
+app.post('/signup', async (req, res) => {
   try {
     const { username, password } = req.body;
     if (!username || !password) {
@@ -61,7 +67,7 @@ app.post('/Signup', async (req, res) => {
 });
 
 //signin
-app.post('/Signin', async (req, res) => {
+app.post('/signin', async (req, res) => {
   try {
     const { username, password } = req.body;
     
