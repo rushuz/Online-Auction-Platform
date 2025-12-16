@@ -17,6 +17,8 @@ function Signup() {
       return;
     }
 
+    console.log('API URL:', process.env.REACT_APP_API_URL);
+
     try {
       const res = await axios.post(`${process.env.REACT_APP_API_URL}/signup`, {
         username,
