@@ -6,6 +6,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const { User, AuctionItem } = require('./model');
 const { connectDB } = require('./db');
+const SECRET_KEY = process.env.JWT_SECRET;
 
 const app = express();
 //server is being configured to handle json
