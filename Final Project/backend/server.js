@@ -12,9 +12,13 @@ const app = express();
 
 //cors will help server to accept requests from multiple domains
 const corsOptions = {
-  origin: '*',
+  origin: [
+    'https://online-auction-platform-d5jpjm72q-rushuzs-projects.vercel.app',
+    'https://online-auction-platform.vercel.app'
+  ],
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: false
 };
 
 app.use(cors(corsOptions));
