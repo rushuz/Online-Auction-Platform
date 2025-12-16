@@ -10,28 +10,12 @@ const SECRET_KEY = process.env.JWT_SECRET;
 
 const app = express();
 
-//cors will help server to accept requests from multiple domains
-app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', '*');
-  res.header(
-    'Access-Control-Allow-Headers',
-    'Origin, X-Requested-With, Content-Type, Accept, Authorization'
-  );
-  res.header(
-    'Access-Control-Allow-Methods',
-    'GET, POST, PUT, DELETE, OPTIONS'
-  );
-
-  if (req.method === 'OPTIONS') {
-    return res.sendStatus(200);
-  }
-
-  next();
-});
-
+app.use(cors({
+  origin: '*'
+}));
 //server is being configured to handle json
 app.use(express.json());
-
+//cors will help server to accept requests from multiple domains
 
 connectDB(); //go to db.js
 
@@ -54,7 +38,7 @@ app.get('/', (req, res) => {
 });
 
 // Signup Route
-app.post('/signup', async (req, res) => {
+app.post('/Signup', async (req, res) => {
   try {
     const { username, password } = req.body;
     if (!username || !password) {
@@ -70,15 +54,15 @@ app.post('/signup', async (req, res) => {
     const newUser = new User({ username, password: hashedPassword });
     await newUser.save();//user is being created in db
 
-    return res.status(201).json({ message: 'User registered successfully' });
+    res.status(201).json({ message: 'User registered successfully' });
   } catch (error) {
     console.error('Signup Error:', error);
-    return res.status(500).json({ message: 'Internal Server Error' });
+    res.status(500).json({ message: 'Internal Server Error' });
   }
 });
 
 //signin
-app.post('/signin', async (req, res) => {
+app.post('/Signin', async (req, res) => {
   try {
     const { username, password } = req.body;
     
