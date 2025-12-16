@@ -11,18 +11,23 @@ const SECRET_KEY = process.env.JWT_SECRET;
 const app = express();
 
 //cors will help server to accept requests from multiple domains
-const corsOptions = {
-  origin: [
-    'https://online-auction-platform-d5jpjm72q-rushuzs-projects.vercel.app',
-    'https://online-auction-platform.vercel.app'
-  ],
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization'],
-  credentials: false
-};
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header(
+    'Access-Control-Allow-Headers',
+    'Origin, X-Requested-With, Content-Type, Accept, Authorization'
+  );
+  res.header(
+    'Access-Control-Allow-Methods',
+    'GET, POST, PUT, DELETE, OPTIONS'
+  );
 
-app.use(cors(corsOptions));
-app.options('*', cors(corsOptions)); // ✅ THIS LINE FIXES PREFLIGHT
+  if (req.method === 'OPTIONS') {
+    return res.sendStatus(200);
+  }
+
+  next();
+});
 
 //server is being configured to handle json
 app.use(express.json());
