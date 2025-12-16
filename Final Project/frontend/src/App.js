@@ -30,8 +30,8 @@ function App() {
         <header>
           <h1 id='top'>Auction App</h1>
           <nav>
-            <Link to="/signup">Signup</Link>
-            <Link to="/signin">Signin</Link>
+            <Link to="/Signup">Signup</Link>
+            <Link to="/Signin">Signin</Link>
             <Link to="/dashboard">Dashboard</Link>
             <Link to="/post-auction">Post Auction</Link>
             {isAuthenticated && (
@@ -42,8 +42,8 @@ function App() {
         <main>
           <Routes>
             <Route path="/" element={<Landing />} />
-            <Route path="/signup" element={<Signup />} />
-            <Route path="/signin" element={<Signin />} />
+            <Route path="/Signup" element={<Signup />} />
+            <Route path="/Signin" element={<Signin />} />
             <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
             <Route path="/auction/:id" element={<AuctionItem />} />
             <Route path="/post-auction" element={<PostAuction />} />
