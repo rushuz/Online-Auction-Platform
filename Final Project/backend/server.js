@@ -9,8 +9,7 @@ const { connectDB } = require('./db');
 const SECRET_KEY = process.env.JWT_SECRET;
 
 const app = express();
-//server is being configured to handle json
-app.use(express.json());
+
 //cors will help server to accept requests from multiple domains
 const corsOptions = {
   origin: '*',
@@ -20,6 +19,9 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 app.options('*', cors(corsOptions)); // ✅ THIS LINE FIXES PREFLIGHT
+
+//server is being configured to handle json
+app.use(express.json());
 
 
 connectDB(); //go to db.js
@@ -59,10 +61,10 @@ app.post('/signup', async (req, res) => {
     const newUser = new User({ username, password: hashedPassword });
     await newUser.save();//user is being created in db
 
-    res.status(201).json({ message: 'User registered successfully' });
+    return res.status(201).json({ message: 'User registered successfully' });
   } catch (error) {
     console.error('Signup Error:', error);
-    res.status(500).json({ message: 'Internal Server Error' });
+    return res.status(500).json({ message: 'Internal Server Error' });
   }
 });
 
